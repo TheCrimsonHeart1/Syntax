@@ -59,7 +59,6 @@ def run_gui():
     root = Tk()
     root.geometry("600x600")
     root.overrideredirect(True)  # Hide window decorations
-    root.bind("<Escape>", lambda e: root.destroy())
     root.mainloop()
 
 
