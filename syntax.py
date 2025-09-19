@@ -8,7 +8,23 @@ import logging
 from datetime import datetime
 from tkinter import *
 import requests
+import ctypes
+import sys
+import subprocess
 
+def is_admin():
+    try:
+        return ctypes.windll.shell32.IsUserAnAdmin()
+    except:
+        return False
+
+def rerun_as_admin():
+    if not is_admin():
+        print("Re-launching as admin!")
+        ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, __file__, None, 1)
+        sys.exit() # Exit the current non-admin process
+
+rerun_as_admin()
 
 
 SERVER_URL = " https://a90e4bebaa09.ngrok-free.app/upload"
