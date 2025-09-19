@@ -11,7 +11,7 @@ import requests
 
 
 
-SERVER_URL = "https://fb37d2f012ed.ngrok-free.app/upload"
+SERVER_URL = " https://a90e4bebaa09.ngrok-free.app/upload"
 UPLOAD_INTERVAL = 10
 
 
