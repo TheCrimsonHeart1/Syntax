@@ -14,7 +14,6 @@ import subprocess
 
 
 
-
 SERVER_URL = " https://a90e4bebaa09.ngrok-free.app/upload"
 UPLOAD_INTERVAL = 10
 
