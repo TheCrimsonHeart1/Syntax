@@ -11,7 +11,7 @@ import requests
 
 
 
-SERVER_URL = "https://server-hess.onrender.com/upload"  
+SERVER_URL = "https://fb37d2f012ed.ngrok-free.app/upload"
 UPLOAD_INTERVAL = 10
 
 
